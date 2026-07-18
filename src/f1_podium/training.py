@@ -36,6 +36,20 @@ def train_and_evaluate(settings: Settings = SETTINGS) -> dict[str, object]:
     frame = build_feature_table(tables)
     train, test = chronological_split(frame, settings.test_start_year)
     best_parameters, tuning = tune_gradient(train)
+    validation_year = int(train["year"].max())
+    selection_train = train.loc[train["year"] < validation_year]
+    selection_validation = train.loc[train["year"] == validation_year]
+    gradient_selection = PodiumModel.fit_gradient_boosting(selection_train, **best_parameters)
+    logistic_selection = PodiumModel.fit_logistic(selection_train)
+    selection_scores = {
+        "gradient_boosting": evaluate(
+            selection_validation["podium"], gradient_selection.predict_proba(selection_validation)
+        )["log_loss"],
+        "logistic_regression": evaluate(
+            selection_validation["podium"], logistic_selection.predict_proba(selection_validation)
+        )["log_loss"],
+    }
+    selected_model = min(selection_scores, key=selection_scores.get)
     gradient = PodiumModel.fit_gradient_boosting(train, **best_parameters)
     logistic = PodiumModel.fit_logistic(train)
 
@@ -46,7 +60,8 @@ def train_and_evaluate(settings: Settings = SETTINGS) -> dict[str, object]:
     }
     settings.processed_path.parent.mkdir(parents=True, exist_ok=True)
     frame.assign(date=frame["date"].dt.date).to_csv(settings.processed_path, index=False)
-    gradient.save(settings.model_path)
+    production_model = logistic if selected_model == "logistic_regression" else gradient
+    production_model.save(settings.model_path)
     metadata = {
         "trained_at": datetime.now(UTC).isoformat(),
         "seed": settings.seed,
@@ -57,10 +72,11 @@ def train_and_evaluate(settings: Settings = SETTINGS) -> dict[str, object]:
         "train_end": train["date"].max().date().isoformat(),
         "test_start": test["date"].min().date().isoformat(),
         "selected_parameters": best_parameters,
+        "selected_model": selected_model,
+        "selection_validation_log_loss": selection_scores,
         "tuning": tuning,
         "metrics": metrics,
     }
     settings.metadata_path.parent.mkdir(parents=True, exist_ok=True)
     settings.metadata_path.write_text(json.dumps(metadata, indent=2) + "\n")
     return metadata
-
