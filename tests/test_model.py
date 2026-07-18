@@ -22,7 +22,7 @@ def test_grid_baseline_declines_with_position(train_and_test) -> None:
     _, test = train_and_test
     ordered = test.sort_values("grid").drop_duplicates("grid")
     probabilities = grid_baseline_probabilities(ordered)
-    assert all(left > right for left, right in zip(probabilities, probabilities[1:], strict=True))
+    assert all(left > right for left, right in zip(probabilities, probabilities[1:]))
 
 
 def test_model_reload_and_single_inference(train_and_test, tmp_path) -> None:
@@ -40,4 +40,3 @@ def test_single_inference_validates_features(train_and_test) -> None:
     model = PodiumModel.fit_logistic(train)
     with pytest.raises(ValueError, match="Missing"):
         model.predict_one("Driver", "Race", {"grid": 1})
-

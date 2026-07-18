@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
 from pathlib import Path
 
 import numpy as np
@@ -116,7 +117,7 @@ def generate_sample_tables(seed: int = 42) -> dict[str, pd.DataFrame]:
     for year in range(2017, 2026):
         for round_number, circuit in enumerate(circuits, start=1):
             circuit_id = circuit[0]
-            date = pd.Timestamp(year, 3, 1) + pd.Timedelta(days=(round_number - 1) * 18)
+            date = pd.Timestamp(year, 3, 1) + timedelta(days=(round_number - 1) * 18)
             races.append(
                 {
                     "race_id": race_id,
@@ -185,4 +186,3 @@ def write_sample_tables(raw_dir: str | Path, seed: int = 42) -> list[Path]:
         )
         paths.append(path)
     return paths
-
