@@ -3,10 +3,10 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
 *.egg-info/
 artifacts/*.joblib
 artifacts/*.json
 data/processed/*.csv
 .DS_Store
-
