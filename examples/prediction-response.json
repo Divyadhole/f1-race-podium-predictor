@@ -1,0 +1,7 @@
+{
+  "driver_name": "Leo Leclerc",
+  "race_name": "Yas Marina Grand Prix",
+  "grid": 1,
+  "podium_probability": 0.8974,
+  "model_version": "gradient-boosting-v1"
+}

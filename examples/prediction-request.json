@@ -1,0 +1,11 @@
+{
+  "driver_name": "Leo Leclerc",
+  "race_name": "Yas Marina Grand Prix",
+  "grid": 1,
+  "driver_podium_rate_5": 1.0,
+  "driver_points_5": 22.2,
+  "constructor_points_5": 43.0,
+  "circuit_finish_history": 1.5,
+  "driver_reliability_5": 1.0,
+  "season_round_fraction": 1.0
+}
