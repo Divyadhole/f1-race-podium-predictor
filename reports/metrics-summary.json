@@ -1,0 +1,42 @@
+{
+  "dataset": {
+    "rows": 1080,
+    "races": 108,
+    "train_rows": 840,
+    "test_rows": 240,
+    "train_end": "2023-09-15",
+    "test_start": "2024-03-01"
+  },
+  "selected_model": "gradient_boosting",
+  "selected_parameters": {
+    "learning_rate": 0.04,
+    "max_leaf_nodes": 7,
+    "l2_regularization": 0.5
+  },
+  "metrics": {
+    "gradient_boosting": {
+      "log_loss": 0.23511460258250536,
+      "brier_score": 0.06500274484506703,
+      "roc_auc": 0.9520089285714286,
+      "pr_auc": 0.9188164585573217,
+      "accuracy": 0.925,
+      "calibration_error": 0.024112711118123995
+    },
+    "logistic_regression": {
+      "log_loss": 0.20772994710800158,
+      "brier_score": 0.05904019491547427,
+      "roc_auc": 0.9642030423280423,
+      "pr_auc": 0.9406931570917328,
+      "accuracy": 0.9291666666666667,
+      "calibration_error": 0.03228625002325933
+    },
+    "grid_baseline": {
+      "log_loss": 0.3013996717051457,
+      "brier_score": 0.08577390016001195,
+      "roc_auc": 0.9682539682539684,
+      "pr_auc": 0.9191950507054674,
+      "accuracy": 0.8833333333333333,
+      "calibration_error": 0.1499922210200738
+    }
+  }
+}
