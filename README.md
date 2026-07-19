@@ -1,5 +1,7 @@
 # F1 Race Podium Predictor
 
+![F1 Race Podium Predictor poster](dashboard/poster.svg)
+
 A production-style machine learning system that joins Formula 1 race, qualifying, driver, constructor, and result tables to produce leakage-safe podium probabilities.
 
 ![Latest race podium forecast](reports/figures/latest-race-forecast.png)
@@ -162,4 +164,3 @@ Tests cover table keys, join cardinality, temporal separation, cold starts, feat
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
